@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.medieval-code/
+*.tsbuildinfo
+.DS_Store
+
+# local editor and assistant settings
+.claude/
+.vscode/
+.idea/
+
+# test and debug output
+coverage/
+test-results/
+*.log

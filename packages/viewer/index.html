@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medieval Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <header class="brand">
+        <div class="brand-icon">M</div>
+        <div>
+          <h1>Medieval Code</h1>
+          <p class="subtitle">Your codebase, as a kingdom</p>
+        </div>
+      </header>
+
+      <div id="stats" class="stats-grid"></div>
+
+      <div class="panel">
+        <div class="panel-title">Time of day</div>
+        <div id="theme-buttons" class="theme-grid"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">View</div>
+        <div id="view-buttons" class="theme-grid"></div>
+        <div id="heat-scale" class="heat-scale" hidden></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Display</div>
+        <div class="control-row">
+          <label class="control-label" for="pixel-range"><span>Pixel size</span><span id="pixel-value" class="pixel-value">1px</span></label>
+          <input id="pixel-range" type="range" min="1" max="6" step="1" value="1" />
+        </div>
+        <label class="check">
+          <input id="motion-toggle" type="checkbox" checked />
+          <span>Animations (flags, smoke, birds)</span>
+        </label>
+        <label class="check">
+          <input id="labels-toggle" type="checkbox" checked />
+          <span>District &amp; file labels</span>
+        </label>
+        <label class="check">
+          <input id="routes-toggle" type="checkbox" />
+          <span>Import routes between districts</span>
+        </label>
+      </div>
+
+      <div class="panel">
+        <label class="panel-title" for="search">Search symbols <kbd>/</kbd></label>
+        <input id="search" type="search" placeholder="Function, class, file…" autocomplete="off" />
+        <div id="search-results" class="result-list" hidden></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Hotspots <span class="panel-note">most complex code</span></div>
+        <div id="hotspots" class="result-list"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Languages</div>
+        <div id="lang-filters" class="chips"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Building types</div>
+        <div id="type-filters" class="chips"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Districts</div>
+        <div id="district-filters" class="tree"></div>
+      </div>
+
+      <div class="panel legend">
+        <div class="panel-title">Legend</div>
+        <ul id="legend-list"></ul>
+        <div class="legend-note">Nested code = buildings <b>inside walled courtyards</b>. Rings of walls = nesting depth; sprawling compounds = big methods.</div>
+      </div>
+
+      <div class="hints">
+        Drag to pan · Scroll to zoom · Q / E rotate 45° · F fit · / search · P save PNG · Click a building to see its code and import routes
+      </div>
+    </aside>
+
+    <main>
+      <canvas id="town-canvas"></canvas>
+      <canvas id="overlay-canvas"></canvas>
+
+      <div id="toolbar">
+        <button id="btn-rot-left" type="button" title="Rotate left (Q)">↺</button>
+        <button id="btn-rot-right" type="button" title="Rotate right (E)">↻</button>
+        <button id="btn-fit" type="button" title="Fit town (F)">Fit</button>
+        <button id="btn-shot" type="button" title="Save a PNG of the view (P)">PNG</button>
+        <span id="zoom-label" class="zoom-badge">100%</span>
+      </div>
+
+      <div id="minimap-wrap">
+        <span class="minimap-label">Map</span>
+        <canvas id="minimap"></canvas>
+      </div>
+
+      <div id="tooltip" hidden>
+        <div id="tooltip-name" class="tooltip-name"></div>
+        <div id="tooltip-meta" class="tooltip-meta"></div>
+      </div>
+
+      <div id="selection" class="selection-panel" hidden>
+        <div class="selection-head">
+          <div id="sel-name" class="sel-name"></div>
+          <button id="close-selection" type="button" title="Close">✕</button>
+        </div>
+        <div class="sel-tags">
+          <span id="sel-type" class="sel-type"></span>
+          <span id="sel-meta" class="sel-meta"></span>
+        </div>
+        <div class="sel-cx">
+          <div id="sel-cx-label" class="sel-cx-label"></div>
+          <div class="sel-cx-bar"><span id="sel-cx-fill"></span></div>
+        </div>
+        <div id="sel-children-wrap" hidden>
+          <div class="panel-title">Inside</div>
+          <div id="sel-children" class="sel-children"></div>
+        </div>
+        <div id="sel-routes-wrap" hidden>
+          <div class="panel-title">Import routes of this file</div>
+          <div id="sel-routes" class="sel-children"></div>
+        </div>
+        <div id="sel-path" class="sel-path"></div>
+        <div class="sel-district">District: <span id="sel-district"></span></div>
+        <button id="open-source" type="button">Open in editor</button>
+      </div>
+
+      <div id="loading" class="loading">
+        <div class="loading-inner">
+          <div class="loading-title">Raising the kingdom…</div>
+          <div class="loading-sub">building voxel meshes</div>
+        </div>
+      </div>
+
+      <div id="error" hidden>
+        <div id="error-msg" class="error-inner"></div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "medieval-code",
+  "version": "0.2.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @medieval-code/model && npm run build -w @medieval-code/parser && npm run build -w @medieval-code/layout && npm run build -w @medieval-code/cli && npm run build -w @medieval-code/viewer",
+    "dev": "npm run dev -w @medieval-code/viewer",
+    "scan": "node packages/cli/dist/index.js scan",
+    "serve": "node packages/cli/dist/index.js serve",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p packages/model --noEmit && tsc -p packages/parser --noEmit && tsc -p packages/layout --noEmit && tsc -p packages/cli --noEmit && tsc -p packages/viewer --noEmit",
+    "test:browser": "node scripts/browser-check.mjs",
+    "docs:images": "node scripts/browser-check.mjs . --images docs/images"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.0",
+    "vitest": "^3.2.7"
+  },
+  "license": "MIT",
+  "description": "Visualize a codebase as an interactive medieval voxel town."
+}

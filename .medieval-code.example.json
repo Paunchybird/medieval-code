@@ -1,0 +1,7 @@
+{
+  "maxFiles": 500,
+  "maxConstructsPerFile": 80,
+  "maxRowWidth": 512,
+  "excludeGlobs": [],
+  "theme": "day"
+}
